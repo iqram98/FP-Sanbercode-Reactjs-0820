@@ -58,8 +58,9 @@ const GameForm = (props) => {
     history.push("/datagame");
   };
 
-  const handleSubmit = (id) => {
-    if (id === null) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (input.id === null) {
       Axios.post(
         `https://backendexample.sanbersy.com/api/data-game`,
         {
@@ -91,7 +92,7 @@ const GameForm = (props) => {
       });
     } else {
       Axios.put(
-        `https://backendexample.sanbersy.com/api/data-game/${id}`,
+        `https://backendexample.sanbersy.com/api/data-game/${input.id}`,
         {
           name: input.name,
           genre: input.genre,
@@ -120,7 +121,7 @@ const GameForm = (props) => {
           history.push("/datagame");
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
       setInput({
         name: "",
@@ -141,7 +142,7 @@ const GameForm = (props) => {
       ) : (
         <Typography variant="h4">Edit Game</Typography>
       )}
-      <form>
+      <form method="post" onSubmit={handleSubmit}>
         <TextField
           id="standard-full-width"
           label="Nama"
@@ -228,7 +229,7 @@ const GameForm = (props) => {
           Cancel
         </Button>
         <Button
-          onClick={() => handleSubmit(input.id)}
+          type="submit"
           variant="contained"
           color="primary"
           disableElevation

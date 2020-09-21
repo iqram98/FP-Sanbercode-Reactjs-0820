@@ -59,8 +59,9 @@ const TambahFilm = (props) => {
     history.push("/datafilm");
   };
 
-  const handleSubmit = (id) => {
-    if (id === null) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (input.id === null) {
       Axios.post(
         `https://backendexample.sanbersy.com/api/data-movie`,
         {
@@ -78,10 +79,9 @@ const TambahFilm = (props) => {
         .then((res) => {
           setDataFilm([...dataFilm, res.data]);
           history.push("/datafilm");
-          console.log(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
       setInput({
         title: "",
@@ -95,7 +95,7 @@ const TambahFilm = (props) => {
       });
     } else {
       Axios.put(
-        `https://backendexample.sanbersy.com/api/data-movie/${id}`,
+        `https://backendexample.sanbersy.com/api/data-movie/${input.id}`,
         {
           title: input.title,
           description: input.description,
@@ -124,10 +124,9 @@ const TambahFilm = (props) => {
           });
           setDataFilm(newFilm);
           history.push("/datafilm");
-          console.log(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
       setInput({
         title: "",
@@ -149,7 +148,7 @@ const TambahFilm = (props) => {
       ) : (
         <Typography variant="h4">Edit Film</Typography>
       )}
-      <form>
+      <form method="post" onSubmit={handleSubmit}>
         <TextField
           id="standard-full-width"
           label="Judul"
@@ -251,7 +250,7 @@ const TambahFilm = (props) => {
           Cancel
         </Button>
         <Button
-          onClick={() => handleSubmit(input.id)}
+          type="submit"
           variant="contained"
           color="primary"
           disableElevation

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 import Film from "./components/Film";
 import Game from "./components/Game";
 import Home from "./Home";
@@ -25,18 +26,18 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route
+              path="/film/:parameter1"
+              render={(props) => <Film {...props} />}
+            />
+            <Route
+              path="/game/:parameter1"
+              render={(props) => <Game {...props} />}
+            />
             {user === null ? (
               <>
                 <Route exact path="/registrasi" component={Registrasi} />
                 <Route exact path="/login" component={Login} />
-                <Route
-                  path="/film/:parameter1"
-                  render={(props) => <Film {...props} />}
-                />
-                <Route
-                  path="/game/:parameter1"
-                  render={(props) => <Game {...props} />}
-                />
               </>
             ) : (
               <>
@@ -57,6 +58,7 @@ function App() {
               </>
             )}
           </Switch>
+          <Footer />
         </Router>
       </DataProvider>
     </div>
